@@ -1,17 +1,34 @@
 {
-    "hosting": {
-      "public": "build",
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
       "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
       ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      "runtime": "python313"
     }
+  ],
+  "storage": {
+    "rules": "storage.rules"
   }
-  
+}
