@@ -1,0 +1,28 @@
+.landing {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #111, #2c2c2c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .landing__content {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .landing__title {
+    font-size: 48px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  
+  .landing__subtitle {
+    font-size: 18px;
+    color: #cccccc;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  
