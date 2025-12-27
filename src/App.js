@@ -1,11 +1,34 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import LandingPage from "./LandingPage";
 import AddBook from "./components/AddBook";
 import BooksNavbar from "./components/Books";
+import SearchBar from "./components/Search";
+
+import animalFarmCover from "./assets/anim.jpg";
+
+const defaultBook = {
+  id: "animal-farm",
+  title: "Animal Farm",
+  author: "George Orwell",
+  year: 1945,
+  coverUrl: animalFarmCover
+};
 
 function App() {
-  const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [books, setBooks] = useState([defaultBook]);
+  const [selectedBook, setSelectedBook] = useState(defaultBook);
+  const [query, setQuery] = useState("");
+
+  const filteredBooks = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return books;
+
+    return books.filter((b) => {
+      const title = b.title.toLowerCase();
+      const author = b.author.toLowerCase();
+      return title.includes(q) || author.includes(q);
+    });
+  }, [books, query]);
 
   return (
     <>
@@ -13,13 +36,16 @@ function App() {
 
       <AddBook
         onAdd={(book) => {
-          setBooks((prev) => [...prev, book]);
+          setBooks((prev) => [book, ...prev]);
           setSelectedBook(book);
+          setQuery("");
         }}
       />
 
+      <SearchBar value={query} onChange={setQuery} />
+
       <BooksNavbar
-        books={books}
+        books={filteredBooks}
         selectedBookId={selectedBook?.id}
         onSelect={setSelectedBook}
       />
