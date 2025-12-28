@@ -29,6 +29,12 @@ function App() {
       return title.includes(q) || author.includes(q);
     });
   }, [books, query]);
+  
+  function handleDeleteSelectedBook() {
+    if (!selectedBook) return;
+    setBooks((prev) => prev.filter((b) => b.id !== selectedBook.id));
+    setSelectedBook(null); 
+  }
 
   return (
     <>
@@ -49,7 +55,6 @@ function App() {
         selectedBookId={selectedBook?.id}
         onSelect={setSelectedBook}
       />
-
       {selectedBook && (
         <div style={{ padding: 20 }}>
           <h3>{selectedBook.title}</h3>
@@ -61,6 +66,8 @@ function App() {
             alt={selectedBook.title}
             style={{ width: 160, borderRadius: 12 }}
           />
+        </div>
+        )}
         </div>
       )}
     </>
