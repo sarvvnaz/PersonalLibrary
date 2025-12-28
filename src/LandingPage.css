@@ -1,5 +1,5 @@
 .landing {
-    min-height: 100vh;
+    min-height: 20%;
     background: linear-gradient(135deg, #111, #2c2c2c);
     display: flex;
     align-items: center;
