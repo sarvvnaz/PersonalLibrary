@@ -66,8 +66,10 @@ function App() {
             alt={selectedBook.title}
             style={{ width: 160, borderRadius: 12 }}
           />
-        </div>
-        )}
+          <br />
+          <button onClick={handleDeleteSelectedBook} style={{ marginTop: 10, color: 'red' }}>
+            Delete Book
+          </button>
         </div>
       )}
     </>
