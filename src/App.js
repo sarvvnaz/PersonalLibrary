@@ -36,6 +36,13 @@ function App() {
     setSelectedBook(null); 
   }
 
+  function handleDeleteBook(bookId) {
+    setBooks((prev) => prev.filter((b) => b.id !== bookId));
+    if (selectedBook?.id === bookId) {
+      setSelectedBook(null);
+    }
+  }
+
   return (
     <>
       <LandingPage />
@@ -54,6 +61,7 @@ function App() {
         books={filteredBooks}
         selectedBookId={selectedBook?.id}
         onSelect={setSelectedBook}
+        onDelete={handleDeleteBook}
       />
       {selectedBook && (
         <div style={{ padding: 20 }}>
