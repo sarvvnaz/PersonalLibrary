@@ -7,3 +7,4 @@ build/
 dist/
 .firebase/
 README.md
+node_modules/
