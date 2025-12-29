@@ -87,6 +87,19 @@ function App() {
       return title.includes(q) || author.includes(q);
     });
   }, [books, query]);
+  
+  function handleDeleteSelectedBook() {
+    if (!selectedBook) return;
+    setBooks((prev) => prev.filter((b) => b.id !== selectedBook.id));
+    setSelectedBook(null); 
+  }
+
+  function handleDeleteBook(bookId) {
+    setBooks((prev) => prev.filter((b) => b.id !== bookId));
+    if (selectedBook?.id === bookId) {
+      setSelectedBook(null);
+    }
+  }
 
   return (
     <>
@@ -106,8 +119,8 @@ function App() {
         books={filteredBooks}
         selectedBookId={selectedBook?.id}
         onSelect={setSelectedBook}
+        onDelete={handleDeleteBook}
       />
-
       {selectedBook && (
         <div style={{ padding: 20 }}>
           <h3>{selectedBook.title}</h3>
@@ -119,6 +132,10 @@ function App() {
             alt={selectedBook.title}
             style={{ width: 160, borderRadius: 12 }}
           />
+          <br />
+          <button onClick={handleDeleteSelectedBook} style={{ marginTop: 10, color: 'red' }}>
+            Delete Book
+          </button>
         </div>
       )}
     </>

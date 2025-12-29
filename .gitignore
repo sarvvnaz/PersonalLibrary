@@ -6,3 +6,5 @@ cat >> .gitignore <<'EOF'
 build/
 dist/
 .firebase/
+README.md
+node_modules/
