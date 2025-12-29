@@ -16,8 +16,6 @@ const STORAGE_KEY = "personalLibrary_books";
 const SELECTED_BOOK_KEY = "personalLibrary_selectedBookId";
 
 function App() {
-  const [books, setBooks] = useState([defaultBook]);
-  const [selectedBook, setSelectedBook] = useState(defaultBook);
   // Load books from localStorage on initial mount
   const [books, setBooks] = useState(() => {
     try {
@@ -86,6 +84,19 @@ function App() {
       return title.includes(q) || author.includes(q);
     });
   }, [books, query]);
+
+  // Handle book deletion - removes from state (which triggers localStorage save)
+  function handleDeleteBook(bookId) {
+    setBooks((prev) => {
+      const updatedBooks = prev.filter((b) => b.id !== bookId);
+      // If the deleted book was selected, select the first remaining book or null
+      if (selectedBook?.id === bookId) {
+        setSelectedBook(updatedBooks.length > 0 ? updatedBooks[0] : null);
+      }
+      return updatedBooks;
+    });
+  }
+
   return (
     <>
       <LandingPage />
@@ -101,6 +112,7 @@ function App() {
         books={filteredBooks}
         selectedBookId={selectedBook?.id}
         onSelect={setSelectedBook}
+        onDelete={handleDeleteBook}
       />
       {selectedBook && (
         <div style={{ padding: 20 }}>
