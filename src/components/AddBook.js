@@ -12,20 +12,25 @@ export default function AddBook({ onAdd }) {
 
     if (!title || !author || !year || !cover) return;
 
-    const book = {
-      id: crypto.randomUUID(),
-      title,
-      author,
-      year,
-      coverUrl: URL.createObjectURL(cover),
+    // Convert image file to base64 for localStorage persistence
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const book = {
+        id: crypto.randomUUID(),
+        title,
+        author,
+        year: parseInt(year),
+        coverUrl: reader.result, // base64 data URL
+      };
+
+      onAdd(book);
+
+      setTitle("");
+      setAuthor("");
+      setYear("");
+      setCover(null);
     };
-
-    onAdd(book);
-
-    setTitle("");
-    setAuthor("");
-    setYear("");
-    setCover(null);
+    reader.readAsDataURL(cover);
   }
 
   return (
