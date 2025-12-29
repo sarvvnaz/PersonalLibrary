@@ -3,9 +3,7 @@ import LandingPage from "./LandingPage";
 import AddBook from "./components/AddBook";
 import BooksNavbar from "./components/Books";
 import SearchBar from "./components/Search";
-
 import animalFarmCover from "./assets/anim.jpg";
-
 const defaultBook = {
   id: "animal-farm",
   title: "Animal Farm",
@@ -18,6 +16,8 @@ const STORAGE_KEY = "personalLibrary_books";
 const SELECTED_BOOK_KEY = "personalLibrary_selectedBookId";
 
 function App() {
+  const [books, setBooks] = useState([defaultBook]);
+  const [selectedBook, setSelectedBook] = useState(defaultBook);
   // Load books from localStorage on initial mount
   const [books, setBooks] = useState(() => {
     try {
@@ -80,18 +80,15 @@ function App() {
   const filteredBooks = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return books;
-
     return books.filter((b) => {
       const title = b.title.toLowerCase();
       const author = b.author.toLowerCase();
       return title.includes(q) || author.includes(q);
     });
   }, [books, query]);
-
   return (
     <>
       <LandingPage />
-
       <AddBook
         onAdd={(book) => {
           setBooks((prev) => [book, ...prev]);
@@ -99,15 +96,12 @@ function App() {
           setQuery("");
         }}
       />
-
       <SearchBar value={query} onChange={setQuery} />
-
       <BooksNavbar
         books={filteredBooks}
         selectedBookId={selectedBook?.id}
         onSelect={setSelectedBook}
       />
-
       {selectedBook && (
         <div style={{ padding: 20 }}>
           <h3>{selectedBook.title}</h3>
@@ -124,5 +118,4 @@ function App() {
     </>
   );
 }
-
 export default App;
