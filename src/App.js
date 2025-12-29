@@ -84,6 +84,19 @@ function App() {
       return title.includes(q) || author.includes(q);
     });
   }, [books, query]);
+  
+  function handleDeleteSelectedBook() {
+    if (!selectedBook) return;
+    setBooks((prev) => prev.filter((b) => b.id !== selectedBook.id));
+    setSelectedBook(null); 
+  }
+
+  function handleDeleteBook(bookId) {
+    setBooks((prev) => prev.filter((b) => b.id !== bookId));
+    if (selectedBook?.id === bookId) {
+      setSelectedBook(null);
+    }
+  }
 
   // Handle book deletion - removes from state (which triggers localStorage save)
   function handleDeleteBook(bookId) {
@@ -125,6 +138,10 @@ function App() {
             alt={selectedBook.title}
             style={{ width: 160, borderRadius: 12 }}
           />
+          <br />
+          <button onClick={handleDeleteSelectedBook} style={{ marginTop: 10, color: 'red' }}>
+            Delete Book
+          </button>
         </div>
       )}
     </>
